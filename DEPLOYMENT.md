@@ -31,11 +31,27 @@ FIREBASE_SERVICE_ACCOUNT_KEY={"type":"service_account","project_id":"...","priva
 4. Make sure to set the environment (Production, Preview, Development)
 5. Redeploy your application
 
+## Additional Optional Environment Variables
+
+For full functionality, you may also want to add these to Vercel (these APIs are used by your application):
+
+```
+OPENAI_API_KEY=your_openai_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+DEEPGRAM_API_KEY=your_deepgram_api_key
+REPLICATE_API_TOKEN=your_replicate_api_token
+```
+
 ## API Keys Used
 
-- Firebase Admin SDK for server-side operations (file uploads, etc.)
-- Firebase Client SDK for client-side authentication and Firestore
-- OpenAI API (if configured)
-- Anthropic API (if configured)
-- Deepgram API (if configured)
-- Replicate API (if configured)
+- **Firebase Admin SDK**: Server-side operations (file uploads, etc.) - ✅ CONFIGURED
+- **Firebase Client SDK**: Client-side authentication and Firestore - ✅ CONFIGURED
+- **OpenAI API**: Chat completions and audio transcription
+- **Anthropic API**: Claude AI chat completions
+- **Deepgram API**: Speech recognition services
+- **Replicate API**: AI image generation
+
+## Current Status
+
+✅ **CONFIGURED**: All Firebase environment variables are properly set
+⚠️ **OPTIONAL**: Additional API keys can be added for full feature support
