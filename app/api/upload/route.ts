@@ -95,4 +95,5 @@ export async function POST(req: NextRequest) {
       error: 'Failed to upload file.',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
+  } 
 } 
