@@ -36,15 +36,10 @@ const getServiceAccount = (): ServiceAccount => {
 if (!getApps().length) {
   const serviceAccount = getServiceAccount();
   const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
-  
-  // Ensure the storage bucket has the full URL format
-  const fullStorageBucket = storageBucket?.includes('gs://')
-    ? storageBucket
-    : `gs://${storageBucket}`;
 
   initializeApp({
     credential: credential.cert(serviceAccount),
-    storageBucket: fullStorageBucket,
+    storageBucket: storageBucket,
   });
 }
 
@@ -58,8 +53,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'File or filePath is missing.' }, { status: 400 });
     }
 
+    // Log file details for debugging
+    console.log('Received file:', {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      path: filePath
+    });
+
     const bucket = getStorage().bucket();
     const buffer = Buffer.from(await file.arrayBuffer());
+
+    console.log('Uploading to Firebase Storage:', {
+      bucket: bucket.name,
+      filePath: filePath,
+      contentType: file.type
+    });
 
     const fileRef = bucket.file(filePath);
     await fileRef.save(buffer, {
@@ -75,7 +84,15 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ mediaUrl: url });
   } catch (error) {
-    console.error('Error uploading to Firebase Storage:', error);
-    return NextResponse.json({ error: 'Failed to upload file.' }, { status: 500 });
-  }
+    console.error('Error uploading to Firebase Storage:', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      details: error
+    });
+    
+    // Return more detailed error information
+    return NextResponse.json({ 
+      error: 'Failed to upload file.',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
 } 
