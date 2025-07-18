@@ -12,14 +12,25 @@ const getServiceAccount = (): ServiceAccount => {
     try {
       return JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
     } catch (error) {
-      console.warn('Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY from environment variable, falling back to file');
+      console.error('Failed to parse FIREBASE_SERVICE_ACCOUNT_KEY:', error);
+      throw new Error('Invalid FIREBASE_SERVICE_ACCOUNT_KEY format');
     }
   }
   
-  // Fall back to reading from file
-  const serviceAccountPath = path.join(process.cwd(), '../pumpkins-ca2b8-firebase-adminsdk-fbsvc-5fffab92e9.json');
-  const serviceAccountKey = fs.readFileSync(serviceAccountPath, 'utf8');
-  return JSON.parse(serviceAccountKey);
+  // In production (Vercel), we should always use environment variables
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('FIREBASE_SERVICE_ACCOUNT_KEY environment variable is required in production');
+  }
+  
+  // Fall back to reading from file in development only
+  try {
+    const serviceAccountPath = path.join(process.cwd(), 'pumpkins-ca2b8-firebase-adminsdk-fbsvc-5fffab92e9.json');
+    const serviceAccountKey = fs.readFileSync(serviceAccountPath, 'utf8');
+    return JSON.parse(serviceAccountKey);
+  } catch (error) {
+    console.error('Failed to read service account file:', error);
+    throw new Error('Firebase service account configuration not found');
+  }
 };
 
 if (!getApps().length) {
