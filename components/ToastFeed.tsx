@@ -20,13 +20,17 @@ interface ToastFeedProps {
   subtitle?: string;
   maxHeight?: string;
   showEmptyState?: boolean;
+  showHeader?: boolean;
+  limit?: number;
 }
 
 export default function ToastFeed({ 
   title = "Your Toasts to Us",
   subtitle = "We'll read every single one on August 21st. Thank you for being part of our ceremony.",
   maxHeight = "600px",
-  showEmptyState = true
+  showEmptyState = true,
+  showHeader = true,
+  limit
 }: ToastFeedProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +59,8 @@ export default function ToastFeed({
         });
         
         console.log('Setting initial toasts:', initialToasts.length);
-        setToasts(initialToasts);
+        const limitedInitialToasts = limit ? initialToasts.slice(0, limit) : initialToasts;
+        setToasts(limitedInitialToasts);
       } catch (err) {
         console.error('Error fetching initial toasts:', err);
         setError('Failed to load messages. Please refresh the page.');
@@ -87,7 +92,8 @@ export default function ToastFeed({
           } as Toast);
         });
         console.log('Updating toasts:', newToasts.length);
-        setToasts(newToasts);
+        const limitedToasts = limit ? newToasts.slice(0, limit) : newToasts;
+        setToasts(limitedToasts);
       },
       (err) => {
         console.error('Error in Firestore listener:', err);
@@ -103,14 +109,16 @@ export default function ToastFeed({
 
   if (isLoading) {
     return (
-      <div className="section-container">
-        <div className="page-container">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-h2 text-gray-800 mb-4">{title}</h2>
-            <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
-          </div>
+      <div className={showHeader ? "section-container" : ""}>
+        <div className={showHeader ? "page-container" : ""}>
+          {showHeader && (
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-h2 text-gray-800 mb-4">{title}</h2>
+              <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+            </div>
+          )}
           
-          <div className="bg-gray-50/50 rounded-lg p-6 scrollbar-thin" style={{ maxHeight }}>
+          <div className={`bg-gray-50/50 rounded-lg p-6 ${maxHeight ? 'scrollbar-thin' : ''}`} style={maxHeight ? { maxHeight } : {}}>
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="bg-gray-200 animate-pulse rounded-lg h-32"></div>
@@ -124,12 +132,14 @@ export default function ToastFeed({
 
   if (error) {
     return (
-      <div className="section-container">
-        <div className="page-container">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-h2 text-gray-800 mb-4">{title}</h2>
-            <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
-          </div>
+      <div className={showHeader ? "section-container" : ""}>
+        <div className={showHeader ? "page-container" : ""}>
+          {showHeader && (
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-h2 text-gray-800 mb-4">{title}</h2>
+              <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto">{subtitle}</p>
+            </div>
+          )}
           
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
             <p className="text-red-600 text-center">{error}</p>
@@ -140,18 +150,20 @@ export default function ToastFeed({
   }
 
   return (
-    <div className="section-container">
-      <div className="page-container">
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-h2 text-gray-800 mb-4">{title}</h2>
-          <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            {subtitle}
-          </p>
-        </div>
+    <div className={showHeader ? "section-container" : ""}>
+      <div className={showHeader ? "page-container" : ""}>
+        {showHeader && (
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-h2 text-gray-800 mb-4">{title}</h2>
+            <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              {subtitle}
+            </p>
+          </div>
+        )}
         
         <div 
-          className="bg-gray-50/50 rounded-lg p-6 overflow-y-auto scrollbar-thin" 
-          style={{ maxHeight }}
+          className={`bg-gray-50/50 rounded-lg p-6 ${maxHeight ? 'overflow-y-auto scrollbar-thin' : ''}`}
+          style={maxHeight ? { maxHeight } : {}}
         >
           {toasts.length > 0 ? (
             <div className="space-y-4">

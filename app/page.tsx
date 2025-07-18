@@ -87,8 +87,19 @@ export default function Home() {
         </div>
         
         <div className="max-w-4xl mx-auto px-6 lg:px-16">
-          <div className="bg-gray-50/50 rounded-lg p-6">
-            <ToastFeed showEmptyState={true} />
+          <ToastFeed 
+            showHeader={false} 
+            showEmptyState={true} 
+            limit={5}
+            maxHeight=""
+          />
+          
+          {/* See More Button */}
+          <div className="text-center mt-8">
+            <Button href="/share-a-toast" className="group">
+              <span className="relative z-10">See All Toasts</span>
+              <span className="absolute inset-0 bg-primary/20 rounded-md scale-110 opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
+            </Button>
           </div>
         </div>
       </section>

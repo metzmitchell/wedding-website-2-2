@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import ToastFeed from '@/components/ToastFeed';
-import { Pencil, Video, Mic } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import { Pencil, Video, Mic, Upload, CheckCircle } from 'lucide-react';
 import { addDocument, uploadFile } from '@/lib/firebase/firebaseUtils';
 
 type SubmissionType = 'text' | 'video' | 'audio' | null;
@@ -26,6 +27,10 @@ export default function ShareToastPage() {
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   
+  // Upload progress states
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadStage, setUploadStage] = useState<'idle' | 'uploading' | 'processing' | 'complete'>('idle');
+  
   const [formData, setFormData] = useState<FormData>({
     name: '',
     message: '',
@@ -45,12 +50,16 @@ export default function ShareToastPage() {
     setSelectedType(null);
     setAudioUrl(null);
     setAudioChunks([]);
+    setUploadProgress(0);
+    setUploadStage('idle');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
+    setUploadProgress(0);
+    setUploadStage('idle');
 
     try {
       let mediaUrl = null;
@@ -58,7 +67,20 @@ export default function ShareToastPage() {
       
       // Upload media if present
       if (selectedType === 'video' && formData.file) {
+        setUploadStage('uploading');
         console.log('Uploading video file via API route...');
+        
+        // Simulate upload progress
+        const progressInterval = setInterval(() => {
+          setUploadProgress(prev => {
+            if (prev >= 90) {
+              clearInterval(progressInterval);
+              return 90;
+            }
+            return prev + Math.random() * 15;
+          });
+        }, 200);
+
         const apiFormData = new FormData();
         apiFormData.append('file', formData.file);
         apiFormData.append('filePath', `toasts/videos/${Date.now()}_${formData.file.name}`);
@@ -68,14 +90,32 @@ export default function ShareToastPage() {
           body: apiFormData,
         });
 
+        clearInterval(progressInterval);
+        setUploadProgress(100);
+        setUploadStage('processing');
+
         const result = await response.json();
         if (!response.ok) {
           throw new Error(result.error || 'Failed to upload video.');
         }
         mediaUrl = result.mediaUrl;
         console.log('Video upload successful:', mediaUrl);
+        
       } else if (selectedType === 'audio' && formData.audioBlob) {
+        setUploadStage('uploading');
         console.log('Uploading audio file via API route...');
+        
+        // Simulate upload progress
+        const progressInterval = setInterval(() => {
+          setUploadProgress(prev => {
+            if (prev >= 90) {
+              clearInterval(progressInterval);
+              return 90;
+            }
+            return prev + Math.random() * 15;
+          });
+        }, 200);
+
         const audioFile = new File([formData.audioBlob], 'audio.webm', { type: 'audio/webm' });
         const apiFormData = new FormData();
         apiFormData.append('file', audioFile);
@@ -85,6 +125,10 @@ export default function ShareToastPage() {
           method: 'POST',
           body: apiFormData,
         });
+
+        clearInterval(progressInterval);
+        setUploadProgress(100);
+        setUploadStage('processing');
 
         const result = await response.json();
         if (!response.ok) {
@@ -110,6 +154,7 @@ export default function ShareToastPage() {
       try {
         const docRef = await addDocument('toasts', documentData);
         console.log('Document saved successfully with ID:', docRef);
+        setUploadStage('complete');
       } catch (firestoreError) {
         console.error('Firestore save failed:', firestoreError);
         throw new Error('Failed to save your message. Please try again.');
@@ -126,6 +171,8 @@ export default function ShareToastPage() {
     } catch (error) {
       console.error('Error submitting toast:', error);
       setError(error instanceof Error ? error.message : 'Oops! Something went wrong. Please try again.');
+      setUploadStage('idle');
+      setUploadProgress(0);
     } finally {
       setIsSubmitting(false);
     }
@@ -419,6 +466,47 @@ export default function ShareToastPage() {
                   </div>
                 )}
 
+                {/* Upload Progress */}
+                {isSubmitting && (selectedType === 'video' || selectedType === 'audio') && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <div className="flex items-center space-x-3 mb-4">
+                      {uploadStage === 'uploading' && (
+                        <>
+                          <Upload className="w-5 h-5 text-blue-600 animate-spin" />
+                          <span className="font-serif text-blue-800">
+                            Uploading your {selectedType}...
+                          </span>
+                        </>
+                      )}
+                      {uploadStage === 'processing' && (
+                        <>
+                          <div className="w-5 h-5 flex items-center justify-center">
+                            <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                          </div>
+                          <span className="font-serif text-blue-800">
+                            Processing your {selectedType}...
+                          </span>
+                        </>
+                      )}
+                      {uploadStage === 'complete' && (
+                        <>
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                          <span className="font-serif text-green-800">
+                            Upload complete! Saving your message...
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <Progress 
+                      value={uploadProgress} 
+                      className="h-3 bg-blue-100"
+                    />
+                    <p className="font-serif text-sm text-blue-600 mt-2">
+                      {Math.round(uploadProgress)}% complete
+                    </p>
+                  </div>
+                )}
+
                 {/* Submit Button */}
                 <div className="flex justify-end">
                   <button
@@ -426,7 +514,11 @@ export default function ShareToastPage() {
                     disabled={isSubmitting || (selectedType === 'audio' && !audioUrl)}
                     className="px-6 py-3 bg-gray-800 text-white font-serif rounded-md hover:bg-gray-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
                   >
-                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                    {isSubmitting && (selectedType === 'video' || selectedType === 'audio') ? (
+                      uploadStage === 'uploading' ? 'Uploading...' :
+                      uploadStage === 'processing' ? 'Processing...' :
+                      uploadStage === 'complete' ? 'Saving...' : 'Sending...'
+                    ) : isSubmitting ? 'Sending...' : 'Send Message'}
                   </button>
                 </div>
               </form>
@@ -456,12 +548,14 @@ export default function ShareToastPage() {
         )}
 
         {/* Public Messages Feed */}
-        <div className="max-w-4xl mx-auto mt-24">
+        <div className="max-w-4xl mx-auto mt-24 px-6 lg:px-16">
           <div className="border-t border-gray-200 pt-12">
             <ToastFeed
               title="Toasts from Family & Friends"
               subtitle="Shared with permission"
               showEmptyState={false}
+              showHeader={true}
+              maxHeight=""
             />
           </div>
         </div>
