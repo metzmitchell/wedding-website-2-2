@@ -1,26 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { initializeApp, getApps, getApp, ServiceAccount } from 'firebase-admin/app';
+import { getStorage } from 'firebase-admin/storage';
+import { credential } from 'firebase-admin';
 import * as path from 'path';
 import * as fs from 'fs';
 
-// Dynamic imports to prevent build-time loading
-let firebaseAdmin: any = null;
-let getApps: any = null;
-let initializeApp: any = null;
-let getStorage: any = null;
-let credential: any = null;
-
-const loadFirebaseAdmin = async () => {
-  if (!firebaseAdmin) {
-    firebaseAdmin = await import('firebase-admin');
-    getApps = firebaseAdmin.getApps;
-    initializeApp = firebaseAdmin.initializeApp;
-    getStorage = firebaseAdmin.getStorage;
-    credential = firebaseAdmin.credential;
-  }
-};
-
 // Initialize Firebase Admin SDK
-const getServiceAccount = (): any => {
+const getServiceAccount = (): ServiceAccount => {
   // Try to read from environment variable first
   if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
     try {
@@ -47,40 +33,18 @@ const getServiceAccount = (): any => {
   }
 };
 
-// Only initialize Firebase Admin SDK when the API route is actually called
-let firebaseInitialized = false;
+if (!getApps().length) {
+  const serviceAccount = getServiceAccount();
+  const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
 
-const initializeFirebaseAdmin = async () => {
-  if (!firebaseInitialized) {
-    try {
-      await loadFirebaseAdmin();
-      
-      if (!getApps().length) {
-        const serviceAccount = getServiceAccount();
-        const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
-
-        if (!storageBucket) {
-          throw new Error('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET environment variable is required');
-        }
-
-        initializeApp({
-          credential: credential.cert(serviceAccount),
-          storageBucket: storageBucket,
-        });
-      }
-      firebaseInitialized = true;
-    } catch (error) {
-      console.error('Failed to initialize Firebase Admin SDK:', error);
-      throw error;
-    }
-  }
-};
+  initializeApp({
+    credential: credential.cert(serviceAccount),
+    storageBucket: storageBucket,
+  });
+}
 
 export async function POST(req: NextRequest) {
   try {
-    // Initialize Firebase Admin SDK only when the route is called
-    await initializeFirebaseAdmin();
-    
     const formData = await req.formData();
     const file = formData.get('file') as File;
     const filePath = formData.get('filePath') as string;
@@ -113,13 +77,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Use signed URLs like the previous working version
     const [url] = await fileRef.getSignedUrl({
       action: 'read',
       expires: '03-09-2491', // A long time in the future
     });
-
-    console.log('Upload successful, signed URL:', url);
 
     return NextResponse.json({ mediaUrl: url });
   } catch (error) {
@@ -135,16 +96,4 @@ export async function POST(req: NextRequest) {
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   } 
-}
-
-// Handle OPTIONS requests for CORS preflight
-export async function OPTIONS(req: NextRequest) {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    },
-  });
 } 
