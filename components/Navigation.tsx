@@ -59,7 +59,11 @@ export default function Navigation() {
                     group-hover:tracking-wider group-hover:scale-105 inline-block
                   `}>
                     {item.label}
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                    <span
+                      className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary transform transition-transform duration-300
+                        ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}
+                      `}
+                    />
                   </span>
                 </Link>
               );
