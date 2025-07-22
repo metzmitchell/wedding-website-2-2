@@ -5,6 +5,7 @@ import NavigationCard from '@/components/NavigationCard';
 import VideoEmbed from '@/components/VideoEmbed';
 import Button from '@/components/Button';
 import ToastFeed from '@/components/ToastFeed'; // Added import for ToastFeed
+import Image from 'next/image'; // Added import for Image
 
 export default function Home() {
   return (
@@ -108,14 +109,78 @@ export default function Home() {
       <section className="py-12 bg-gradient-to-b from-background to-white overflow-hidden">
         <div className="relative">
           <div className="flex gap-4 animate-scroll-slow">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-                <div className="bg-white p-2 shadow-md">
-                  <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded" />
-                  <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Memory #{i}</p>
+            {/* 1 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/baby-mitch-baby-goat.webp" alt="Baby Mitch baby goat" fill className="object-cover rounded" />
                 </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Baby Mitch baby goat</p>
               </div>
-            ))}
+            </div>
+            {/* 2 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/sarah-as-a-kid.webp" alt="Sarah as a kid" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Sarah as a kid</p>
+              </div>
+            </div>
+            {/* 3 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/sarahs-pic-of-mitch-before-we-met.webp" alt="Sarah's pic of Mitch before we met" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Sarah's pic of Mitch before we met</p>
+              </div>
+            </div>
+            {/* 4 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/miss-that-prius-tent.webp" alt="Miss that Prius tent" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Miss that Prius tent</p>
+              </div>
+            </div>
+            {/* 5 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/just-to-keep-you-guessing.webp" alt="Just to keep you guessing" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Just to keep you guessing</p>
+              </div>
+            </div>
+            {/* 6 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/weird-love-notes.webp" alt="Weird love notes" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Weird love notes</p>
+              </div>
+            </div>
+            {/* 7 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/family-dinner-attire-inspo.webp" alt="Family dinner attire inspo" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Family dinner attire inspo</p>
+              </div>
+            </div>
+            {/* 8 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/elopement-lake-daytime.webp" alt="Elopement lake daytime" fill className="object-cover rounded" />
+                </div>
+                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Elopement lake daytime</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

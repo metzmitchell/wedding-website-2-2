@@ -1,3 +1,5 @@
+import VideoThumbnail from './VideoThumbnail';
+
 interface MessageCardProps {
   message: string;
   author: string;
@@ -22,16 +24,9 @@ export default function MessageCard({ message, author, type = 'text', mediaUrl }
   if (type === 'video') {
     return (
       <div className="message-card">
-        <div className="aspect-video bg-gray-100 rounded-md mb-4 flex items-center justify-center">
+        <div className="aspect-video bg-gray-100 rounded-md mb-4 overflow-hidden relative group">
           {mediaUrl ? (
-            <video 
-              controls 
-              className="w-full h-full rounded-md"
-              poster="/api/placeholder/400/225"
-            >
-              <source src={mediaUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <VideoThumbnail videoUrl={mediaUrl} />
           ) : (
             <div className="text-center">
               <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-2">

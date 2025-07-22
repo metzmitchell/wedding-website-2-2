@@ -32,10 +32,10 @@ export default function OurMarriagePage() {
               <Card className="bg-white p-3 rotate-2 shadow-xl">
                 <CardContent className="p-0">
                   <AspectRatio ratio={4 / 3} className="bg-stone-100">
-                    <PlaceholderImage text="Bear Creek Lake Photo" />
+                    <Image src="/images/the-elopement-lake.webp" alt="The elopement lake" fill className="object-cover rounded" />
                   </AspectRatio>
                   <p className="mt-4 mb-2 font-handwriting text-lg text-gray-700 text-center">
-                    Where it all began ♥
+                    The elopement lake
                   </p>
                 </CardContent>
               </Card>
@@ -56,10 +56,10 @@ export default function OurMarriagePage() {
               <Card className="bg-white p-3 -rotate-1 shadow-xl">
                 <CardContent className="p-0">
                   <AspectRatio ratio={4 / 3} className="bg-stone-100">
-                    <PlaceholderImage text="Ceremony Location Photo" />
+                    <Image src="/images/right-next-to-the-wedding-spot.webp" alt="Right next to the wedding spot" fill className="object-cover rounded" />
                   </AspectRatio>
                   <p className="mt-4 mb-2 font-handwriting text-lg text-gray-700 text-center">
-                    Our perfect spot 🌿
+                    Right next to the wedding spot
                   </p>
                 </CardContent>
               </Card>
