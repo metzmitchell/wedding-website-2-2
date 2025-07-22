@@ -77,12 +77,6 @@ const initializeFirebaseAdmin = async () => {
 };
 
 export async function POST(req: NextRequest) {
-  // Add CORS headers
-  const response = NextResponse.next();
-  response.headers.set('Access-Control-Allow-Origin', '*');
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
   try {
     // Initialize Firebase Admin SDK only when the route is called
     await initializeFirebaseAdmin();
@@ -113,27 +107,21 @@ export async function POST(req: NextRequest) {
     });
 
     const fileRef = bucket.file(filePath);
-    
-    // Upload with metadata including CORS-friendly content type
     await fileRef.save(buffer, {
       metadata: {
         contentType: file.type,
-        cacheControl: 'public, max-age=31536000', // Cache for 1 year
       },
     });
 
-    // Make the file publicly readable
-    await fileRef.makePublic();
-
-    // Get the public URL instead of signed URL to avoid CORS issues
-    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
-
-    console.log('Upload successful, public URL:', publicUrl);
-
-    return NextResponse.json({ 
-      mediaUrl: publicUrl,
-      success: true 
+    // Use signed URLs like the previous working version
+    const [url] = await fileRef.getSignedUrl({
+      action: 'read',
+      expires: '03-09-2491', // A long time in the future
     });
+
+    console.log('Upload successful, signed URL:', url);
+
+    return NextResponse.json({ mediaUrl: url });
   } catch (error) {
     console.error('Error uploading to Firebase Storage:', {
       error: error instanceof Error ? error.message : 'Unknown error',
