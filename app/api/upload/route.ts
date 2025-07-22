@@ -59,6 +59,10 @@ const initializeFirebaseAdmin = async () => {
         const serviceAccount = getServiceAccount();
         const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
 
+        if (!storageBucket) {
+          throw new Error('NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET environment variable is required');
+        }
+
         initializeApp({
           credential: credential.cert(serviceAccount),
           storageBucket: storageBucket,
@@ -73,6 +77,12 @@ const initializeFirebaseAdmin = async () => {
 };
 
 export async function POST(req: NextRequest) {
+  // Add CORS headers
+  const response = NextResponse.next();
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
   try {
     // Initialize Firebase Admin SDK only when the route is called
     await initializeFirebaseAdmin();
@@ -103,18 +113,27 @@ export async function POST(req: NextRequest) {
     });
 
     const fileRef = bucket.file(filePath);
+    
+    // Upload with metadata including CORS-friendly content type
     await fileRef.save(buffer, {
       metadata: {
         contentType: file.type,
+        cacheControl: 'public, max-age=31536000', // Cache for 1 year
       },
     });
 
-    const [url] = await fileRef.getSignedUrl({
-      action: 'read',
-      expires: '03-09-2491', // A long time in the future
-    });
+    // Make the file publicly readable
+    await fileRef.makePublic();
 
-    return NextResponse.json({ mediaUrl: url });
+    // Get the public URL instead of signed URL to avoid CORS issues
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filePath}`;
+
+    console.log('Upload successful, public URL:', publicUrl);
+
+    return NextResponse.json({ 
+      mediaUrl: publicUrl,
+      success: true 
+    });
   } catch (error) {
     console.error('Error uploading to Firebase Storage:', {
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -128,4 +147,16 @@ export async function POST(req: NextRequest) {
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   } 
+}
+
+// Handle OPTIONS requests for CORS preflight
+export async function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  });
 } 

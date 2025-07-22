@@ -1,8 +1,18 @@
 [
-    {
-      "origin": ["http://localhost:3001", "https://your-production-domain.com"],
-      "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
-      "responseHeader": ["Content-Type", "Authorization", "X-Goog-Resumable"],
-      "maxAgeSeconds": 3600
-    }
-  ]
+  {
+    "origin": [
+      "https://www.pumpkinspumpkinspumpkinsandmore.com",
+      "https://pumpkinspumpkinspumpkinsandmore.com",
+      "http://localhost:3000",
+      "http://localhost:3001"
+    ],
+    "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": [
+      "Content-Type",
+      "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Methods",
+      "Access-Control-Allow-Headers"
+    ]
+  }
+]

@@ -1,57 +1,81 @@
-# Vercel Deployment Environment Variables
+# Deployment Guide
 
-## Required Environment Variables for Vercel
+## Firebase Storage CORS Configuration
 
-### Client-side Firebase Configuration (NEXT_PUBLIC_*)
-These are automatically detected from your `.env.local` file:
+To fix video upload and playback issues, you need to configure CORS for your Firebase Storage bucket.
 
+### Option 1: Using Firebase CLI (Recommended)
+
+1. Install Firebase CLI if you haven't already:
+   ```bash
+   npm install -g firebase-tools
+   ```
+
+2. Login to Firebase:
+   ```bash
+   firebase login
+   ```
+
+3. Initialize Firebase in your project (if not already done):
+   ```bash
+   firebase init
+   ```
+
+4. Set the CORS configuration for your storage bucket:
+   ```bash
+   gsutil cors set cors.json gs://pumpkins-ca2b8.appspot.com
+   ```
+
+### Option 2: Using Google Cloud Console
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Select your Firebase project
+3. Navigate to Cloud Storage > Browser
+4. Select your storage bucket (pumpkins-ca2b8.appspot.com)
+5. Go to the "Permissions" tab
+6. Click "Add CORS configuration"
+7. Use the configuration from the `cors.json` file in this project
+
+### Option 3: Using gsutil directly
+
+If you have gsutil installed:
+
+```bash
+gsutil cors set cors.json gs://pumpkins-ca2b8.appspot.com
 ```
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-```
 
-### Server-side Firebase Admin Configuration
-Add this to your Vercel environment variables:
+## Environment Variables
 
-```
-FIREBASE_SERVICE_ACCOUNT_KEY={"type":"service_account","project_id":"...","private_key_id":"...","private_key":"...","client_email":"...","client_id":"...","auth_uri":"...","token_uri":"...","auth_provider_x509_cert_url":"...","client_x509_cert_url":"..."}
-```
+Make sure these environment variables are set in your Vercel deployment:
 
-**Note**: The FIREBASE_SERVICE_ACCOUNT_KEY should be the entire contents of your Firebase service account JSON file as a single-line string.
+- `FIREBASE_SERVICE_ACCOUNT_KEY` - Your Firebase service account JSON (stringified)
+- `NEXT_PUBLIC_FIREBASE_API_KEY`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `NEXT_PUBLIC_FIREBASE_APP_ID`
 
-## Setting Environment Variables in Vercel
+## Testing the Fix
 
-1. Go to your Vercel project dashboard
-2. Navigate to Settings → Environment Variables
-3. Add each variable with its corresponding value
-4. Make sure to set the environment (Production, Preview, Development)
-5. Redeploy your application
+After applying the CORS configuration:
 
-## Additional Optional Environment Variables
+1. Try uploading a new video
+2. Check if existing videos now load properly
+3. Verify that video thumbnails are generated
+4. Test video playback functionality
 
-For full functionality, you may also want to add these to Vercel (these APIs are used by your application):
+## Troubleshooting
 
-```
-OPENAI_API_KEY=your_openai_api_key
-ANTHROPIC_API_KEY=your_anthropic_api_key
-DEEPGRAM_API_KEY=your_deepgram_api_key
-REPLICATE_API_TOKEN=your_replicate_api_token
-```
+If videos still don't work after CORS configuration:
 
-## API Keys Used
+1. Check the browser console for CORS errors
+2. Verify the storage bucket name matches your Firebase project
+3. Ensure the CORS configuration was applied successfully
+4. Check that videos are being made public in the upload process
 
-- **Firebase Admin SDK**: Server-side operations (file uploads, etc.) - ✅ CONFIGURED
-- **Firebase Client SDK**: Client-side authentication and Firestore - ✅ CONFIGURED
-- **OpenAI API**: Chat completions and audio transcription
-- **Anthropic API**: Claude AI chat completions
-- **Deepgram API**: Speech recognition services
-- **Replicate API**: AI image generation
+## Security Notes
 
-## Current Status
-
-✅ **CONFIGURED**: All Firebase environment variables are properly set
-⚠️ **OPTIONAL**: Additional API keys can be added for full feature support
+- The current CORS configuration allows access from any origin (*) for simplicity
+- For production, consider restricting origins to only your domain
+- Videos are made public for easier access, but you can implement signed URLs for better security

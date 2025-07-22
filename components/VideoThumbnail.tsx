@@ -63,16 +63,24 @@ export default function VideoThumbnail({ videoUrl, className = '' }: VideoThumbn
       generateThumbnail();
     };
 
-    const handleError = () => {
+    const handleError = (e: Event) => {
+      console.error('Video loading error:', e);
       setError(true);
       setIsLoading(false);
     };
 
+    const handleLoadStart = () => {
+      setIsLoading(true);
+      setError(false);
+    };
+
+    video.addEventListener('loadstart', handleLoadStart);
     video.addEventListener('loadeddata', handleLoadedData);
     video.addEventListener('seeked', handleSeeked);
     video.addEventListener('error', handleError);
 
     return () => {
+      video.removeEventListener('loadstart', handleLoadStart);
       video.removeEventListener('loadeddata', handleLoadedData);
       video.removeEventListener('seeked', handleSeeked);
       video.removeEventListener('error', handleError);
@@ -95,8 +103,11 @@ export default function VideoThumbnail({ videoUrl, className = '' }: VideoThumbn
         controls 
         className={`w-full h-full rounded-md ${className}`}
         onEnded={handleVideoEnd}
+        crossOrigin="anonymous"
       >
         <source src={videoUrl} type="video/mp4" />
+        <source src={videoUrl} type="video/quicktime" />
+        <source src={videoUrl} type="video/x-msvideo" />
         Your browser does not support the video tag.
       </video>
     );
@@ -110,8 +121,11 @@ export default function VideoThumbnail({ videoUrl, className = '' }: VideoThumbn
         className="hidden"
         preload="metadata"
         crossOrigin="anonymous"
+        muted
       >
         <source src={videoUrl} type="video/mp4" />
+        <source src={videoUrl} type="video/quicktime" />
+        <source src={videoUrl} type="video/x-msvideo" />
       </video>
       
       {/* Hidden canvas for thumbnail generation */}
@@ -140,6 +154,7 @@ export default function VideoThumbnail({ videoUrl, className = '' }: VideoThumbn
                 <span className="text-2xl">🎥</span>
               </div>
               <p className="text-gray-500 font-serif text-sm">Video Preview</p>
+              <p className="text-gray-400 font-serif text-xs mt-1">Click to play</p>
             </div>
           </div>
         )}
