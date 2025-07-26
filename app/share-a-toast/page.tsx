@@ -233,19 +233,18 @@ export default function ShareToastPage() {
           </h1>
           
           <p className="font-serif text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto text-center">
-            We're eloping in one of our favorite spots in the Western North Carolina mountains on August 21st – the anniversary of our first kiss and that amazing solar eclipse day you can read about on the Our Story page. Making this date our wedding anniversary felt perfect.
+            After we say our vows at our little island on the lake, we'll head to a nearby cabin for our wedding dinner. There we'll talk about what we want our marriage to look like and the type of family we want to be.
           </p>
           
           <p className="font-serif text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto text-center mt-6">
-            After we say our vows and set intentions for our lives together and the family we're creating, we'll head to a nearby cabin for our wedding dinner. There we'll discuss what we want our marriage to look like and the type of family we want to be, writing it all down as a living document of our intentions.
+            We want to include all our family and friends who want to contribute – absolutely no pressure! Your voices will be part of our ceremony through this virtual toast on our special day. 
           </p>
           
           <p className="font-serif text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto text-center mt-6">
-            We want to include all our family and friends who want to contribute – absolutely no pressure. Your voices will be part of our ceremony through this virtual asynchronous toast. Share your advice or well wishes as we set our intentions for our future together.
+            Feel free to keep it simple! Write a short message or share a quick video – doesn't have to be more than a few minutes. We just appreciate you thinking of us and being a part of our lives.
           </p>
-          
           <p className="font-serif text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto text-center mt-6">
-            Feel free to keep it simple! Write a short message or share a quick video – doesn't have to be more than a few minutes and you don't need to spend an hour crafting it. We just appreciate you thinking of us and helping you feel like part of our wedding.
+            Note: If this doesn't work for you (Mitch coded it with AI), just email us at <a href="mailto:metzmitchell@gmail.com" className="text-blue-500 hover:text-blue-600">metzmitchell@gmail.com</a>
           </p>
         </div>
 
@@ -367,8 +366,8 @@ export default function ShareToastPage() {
                         e.stopPropagation();
                         const file = e.dataTransfer.files[0];
                         if (file && file.type.startsWith('video/')) {
-                          if (file.size > 100 * 1024 * 1024) {
-                            setError('Video must be less than 100MB');
+                          if (file.size > 8 * 1024 * 1024 * 1024) {
+                            setError('Video must be less than 8GB');
                             return;
                           }
                           setFormData({ ...formData, file });
@@ -380,8 +379,8 @@ export default function ShareToastPage() {
                         accept="video/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
-                          if (file && file.size > 100 * 1024 * 1024) {
-                            setError('Video must be less than 100MB');
+                          if (file && file.size > 8 * 1024 * 1024 * 1024) {
+                            setError('Video must be less than 8GB');
                             return;
                           }
                           setFormData({ ...formData, file: file || null });
@@ -395,7 +394,7 @@ export default function ShareToastPage() {
                           {formData.file ? formData.file.name : 'Click to browse or drag and drop'}
                         </p>
                         <p className="font-serif text-sm text-gray-500 mt-2">
-                          MP4, MOV, AVI (max 100MB)
+                          MP4, MOV, AVI (max 8GB)
                         </p>
                       </label>
                     </div>
