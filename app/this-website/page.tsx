@@ -8,19 +8,19 @@ export default function ThisWebsitePage() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="font-serif text-display text-gray-800 mb-8">This Website</h1>
-            <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto">
-              Built with AI using "Vibe Coding" - I was just wanting to learn more about using AI.
-            </p>
           </div>
-
           <div className="space-y-12">
             {/* Branding Section */}
             <section>
               <h2 className="font-serif text-2xl font-semibold text-gray-800 mb-6">
                 Why Pumpkinspumpkinspumpkinsandmore.com ???
               </h2>
+              <p className="font-serif text-body text-gray-600 mb-4">
+                As a marketer, I love finding truly terrible branding. I call Sarah "Pumpkin," and during a long drive, 
+                I started imagining the worst possible brand name: "Pumpkins Pumpkins Pumpkins and More." For some reason, I got hyper-focused on this name. 
+              </p>
               <p className="font-serif text-body text-gray-600">
-                The domain name is a bit of a mouthful, but it's ours! We wanted something unique and memorable.
+                So naturally, I bought the domain.
               </p>
             </section>
 
