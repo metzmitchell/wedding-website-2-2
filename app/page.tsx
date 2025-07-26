@@ -6,6 +6,7 @@ import VideoEmbed from '@/components/VideoEmbed';
 import Button from '@/components/Button';
 import ToastFeed from '@/components/ToastFeed'; // Added import for ToastFeed
 import Image from 'next/image'; // Added import for Image
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
@@ -29,19 +30,17 @@ export default function Home() {
           </div>
 
           <h1 className="font-serif text-5xl lg:text-6xl font-light text-foreground mb-12 tracking-wide animate-fade-in">
-            Our Wedding Celebration
+            We're Getting Married!!
           </h1>
           
-          <p className="font-serif text-xl lg:text-2xl text-secondary-foreground leading-relaxed mb-16 max-w-2xl mx-auto animate-fade-in-delay-1">
-            Hello friends and family. We are extremely grateful to have all of you in our lives. This website gives you a glimpse into the family we're creating together. We're eloping in one of our favorite spots in the Western NC mountains, and to bring everyone into the ceremony, we'd love to read some well-wishes and advice that evening. Please send us a short video, audio message, or written note!
-          </p>
+
 
           {/* YouTube Video with elegant frame */}
           <div className="mb-8 animate-fade-in-delay-2">
             <div className="relative max-w-3xl mx-auto">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl blur-xl" />
               <VideoEmbed 
-                videoId="dQw4w9WgXcQ" 
+                videoId="MZ0X_Cn-oYY" 
                 title="Mitch & Sarah's Wedding Video"
                 className="relative"
               />
@@ -63,7 +62,10 @@ export default function Home() {
             <div className="absolute -inset-1 bg-gradient-to-b from-transparent via-primary/5 to-transparent rounded-lg" />
             <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-8 lg:p-12 shadow-lg border border-primary/10 max-w-3xl mx-auto mb-12">
               <p className="font-serif text-lg lg:text-xl text-card-foreground leading-relaxed mb-6">
-                We're eloping in one of our favorite spots in the Western North Carolina mountains on August 21st. After the ceremony at the lake, we'll head to our cabin for the evening where we'll read your well-wishes and set our marriage intentions together.
+                Hello friends and family. We are extremely grateful to have all of you in our lives. This website gives you a glimpse into the family we're creating together. We're eloping in one of our favorite spots in the Western North Carolina mountains on August 21st. After the ceremony at the lake, we'll head to our cabin for the evening where we'll read your well-wishes and set our marriage intentions together.
+              </p>
+              <p className="font-serif text-lg lg:text-xl text-card-foreground leading-relaxed mb-6">
+                To bring everyone into the ceremony, we'd love to read some well-wishes and advice that evening. Please send us a short video, audio message, or written note!
               </p>
               <p className="font-serif text-lg lg:text-xl text-card-foreground leading-relaxed">
                 This intimate celebration feels right for us, and having your words as part of our ceremony means we can feel your love and presence even from afar.
@@ -105,86 +107,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Photo Strip Section - New Creative Element */}
-      <section className="py-12 bg-gradient-to-b from-background to-white overflow-hidden">
-        <div className="relative">
-          <div className="flex gap-4 animate-scroll-slow">
-            {/* 1 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/baby-mitch-baby-goat.webp" alt="Baby Mitch baby goat" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Baby Mitch baby goat</p>
-              </div>
-            </div>
-            {/* 2 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/sarah-as-a-kid.webp" alt="Sarah as a kid" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Sarah as a kid</p>
-              </div>
-            </div>
-            {/* 3 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/sarahs-pic-of-mitch-before-we-met.webp" alt="Sarah's pic of Mitch before we met" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Sarah's pic of Mitch before we met</p>
-              </div>
-            </div>
-            {/* 4 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/miss-that-prius-tent.webp" alt="Miss that Prius tent" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Miss that Prius tent</p>
-              </div>
-            </div>
-            {/* 5 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/just-to-keep-you-guessing.webp" alt="Just to keep you guessing" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Just to keep you guessing</p>
-              </div>
-            </div>
-            {/* 6 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/weird-love-notes.webp" alt="Weird love notes" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Weird love notes</p>
-              </div>
-            </div>
-            {/* 7 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/family-dinner-attire-inspo.webp" alt="Family dinner attire inspo" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Family dinner attire inspo</p>
-              </div>
-            </div>
-            {/* 8 */}
-            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
-              <div className="bg-white p-2 shadow-md">
-                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
-                  <Image src="/images/elopement-lake-daytime.webp" alt="Elopement lake daytime" fill className="object-cover rounded" />
-                </div>
-                <p className="text-center text-xs text-gray-500 mt-1 font-['Caveat']">Elopement lake daytime</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Navigation Cards Section with enhanced styling */}
       <section className="section-container bg-gradient-to-b from-white to-background relative">
         <div className="absolute inset-0 opacity-[0.02]" style={{
@@ -206,53 +128,196 @@ export default function Home() {
             <NavigationCard
               href="/our-story"
               title="Our Story"
-              description="How we met, our first date, and what we do now"
+              description="How we met, other stories, and what we're up to now"
               className="group hover:transform hover:scale-[1.02] transition-all duration-500"
             />
             <NavigationCard
               href="/our-marriage"
               title="Our Marriage"
-              description="What we're doing on August 21st and why Bear Creek Lake"
+              description="Who, what, where, when, and why"
               className="group hover:transform hover:scale-[1.02] transition-all duration-500"
             />
             <NavigationCard
               href="/registry"
               title="Registry"
-              description="We have everything we need, except a house to put it in"
+              description="We have everything we need :)"
               className="group hover:transform hover:scale-[1.02] transition-all duration-500"
             />
           </div>
         </div>
       </section>
 
-      {/* Footer with enhanced styling */}
-      <footer className="bg-gradient-to-b from-background to-white border-t border-border/50 py-16 lg:py-20">
-        <div className="max-w-6xl mx-auto px-6 lg:px-16 text-center">
-          <div className="mb-8">
-            <a 
-              href="/family-gathering" 
-              className="font-serif text-base text-secondary-foreground hover:text-primary transition-all duration-300 hover:underline underline-offset-4"
-            >
-              Family Gathering
-            </a>
-            <span className="mx-4 text-primary/30">•</span>
-            <a 
-              href="/this-website" 
-              className="font-serif text-base text-secondary-foreground hover:text-primary transition-all duration-300 hover:underline underline-offset-4"
-            >
-              This Website
-            </a>
-          </div>
-          
-          <div className="max-w-2xl mx-auto">
-            <div className="inline-block px-8 py-4 bg-white/50 backdrop-blur rounded-lg shadow-sm border border-primary/10">
-              <p className="font-serif text-sm text-muted-foreground italic">
-                As a side note, Mitch coded this entire website using AI, so some features might or might not work.
-              </p>
+      {/* Photo Strip Section - New Creative Element */}
+      <section className="py-12 bg-gradient-to-b from-background to-white overflow-hidden">
+        <div className="relative">
+          <div className="flex gap-4 animate-scroll-slow">
+            {/* 1 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/sarahs-pic-of-mitch-before-we-met.webp" alt="Sarah's pic of Mitch before we met" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 2 */}
+            <div className="flex-shrink-0 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/first-pic-together.webp" alt="First pic together" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 3 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/the-night-we-met-at-mitchs-show!.webp" alt="The night we met at Mitch's show!" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 4 */}
+            <div className="flex-shrink-0 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/fake-proposal.webp" alt="Fake proposal" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 5 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/goofy-looking-tourists.webp" alt="Goofy looking tourists" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 6 */}
+            <div className="flex-shrink-0 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/honeymoon-in-puerto-rico.webp" alt="Honeymoon in Puerto Rico" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 7 */}
+            <div className="flex-shrink-0 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/the-lake-we-got-engaged-at.webp" alt="The lake we got engaged at" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 8 */}
+            <div className="flex-shrink-0 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/weird-love-notes.webp" alt="Weird love notes" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 9 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/miss-that-prius-tent.webp" alt="Miss that Prius tent" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 10 */}
+            <div className="flex-shrink-0 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/elopement-lake-daytime.webp" alt="Elopement lake daytime" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* Duplicated for seamless loop */}
+            {/* 1 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/sarahs-pic-of-mitch-before-we-met.webp" alt="Sarah's pic of Mitch before we met" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 2 */}
+            <div className="flex-shrink-0 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/first-pic-together.webp" alt="First pic together" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 3 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/the-night-we-met-at-mitchs-show!.webp" alt="The night we met at Mitch's show!" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 4 */}
+            <div className="flex-shrink-0 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/fake-proposal.webp" alt="Fake proposal" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 5 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/goofy-looking-tourists.webp" alt="Goofy looking tourists" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 6 */}
+            <div className="flex-shrink-0 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/honeymoon-in-puerto-rico.webp" alt="Honeymoon in Puerto Rico" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 7 */}
+            <div className="flex-shrink-0 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/the-lake-we-got-engaged-at.webp" alt="The lake we got engaged at" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 8 */}
+            <div className="flex-shrink-0 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/weird-love-notes.webp" alt="Weird love notes" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 9 */}
+            <div className="flex-shrink-0 transform rotate-1 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/miss-that-prius-tent.webp" alt="Miss that Prius tent" fill className="object-cover rounded" />
+                </div>
+              </div>
+            </div>
+            {/* 10 */}
+            <div className="flex-shrink-0 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-white p-2 shadow-md">
+                <div className="w-32 h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded relative overflow-hidden">
+                  <Image src="/images/elopement-lake-daytime.webp" alt="Elopement lake daytime" fill className="object-cover rounded" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Footer with enhanced styling */}
+      {/* <Footer /> */}
     </>
   );
 }
