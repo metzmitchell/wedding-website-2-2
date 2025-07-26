@@ -24,7 +24,7 @@ export default function OurMarriagePage() {
         <div className="bg-white/50 backdrop-blur-sm rounded-lg p-8 lg:p-12 shadow-sm mb-16 lg:mb-24">
           <div className="prose prose-lg max-w-none">
             <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed mb-6">
-              Bear Creek Lake holds a special place in our hearts. It's where we first realized that our connection was something extraordinary, where countless summer days were spent exploring its hidden coves, and where we decided to build our future together.
+            Its not the lake where we started but it holds a special place in our hearts. We have spent many some days hanging out, camping, and boating around. Some of our favorite nights were camping there, just the two of us, making tacos around the fire and chatting about our lives and our futures.
             </p>
 
             {/* Polaroid-style photo */}
@@ -35,23 +35,16 @@ export default function OurMarriagePage() {
                     <Image src="/images/the-elopement-lake.webp" alt="The elopement lake" fill className="object-cover rounded" />
                   </AspectRatio>
                   <p className="mt-4 mb-2 font-handwriting text-lg text-gray-700 text-center">
-                    The elopement lake
+                    Bear Creek Lake camping
                   </p>
                 </CardContent>
               </Card>
             </div>
 
             <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed mb-6">
-              Our ceremony will take place at the river mouth, on a small grassy island surrounded by towering cliffs. The natural amphitheater created by the landscape provides an intimate setting that perfectly captures the essence of our relationship - grounded in nature, surrounded by beauty, and deeply personal.
+            Our ceremony will take place at the mouth of a river that leads into the lake, on a small little grassy island surrounded by tall mountainsides. Its such a lovely and intimate place that perfectly captures the essence of our relationship - grounded in nature, surrounded by beauty and deeply personal.
             </p>
-
-            <div className="border-l-4 border-primary pl-6 my-8">
-              <p className="font-serif text-xl italic text-gray-700">
-                "This place reminds us that the most meaningful moments in life often happen in the simplest settings, surrounded by nothing but nature and love."
-              </p>
-            </div>
-
-            {/* Second Polaroid-style photo */}
+                        {/* Second Polaroid-style photo */}
             <div className="my-12 lg:my-16 max-w-sm mx-auto">
               <Card className="bg-white p-3 -rotate-1 shadow-xl">
                 <CardContent className="p-0">
@@ -66,11 +59,7 @@ export default function OurMarriagePage() {
             </div>
 
             <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed mb-6">
-              After exchanging our vows, we'll retreat to a cozy cabin overlooking the lake. There, we'll spend our first evening as a married couple reading your heartfelt messages and toasts, letting the joy of the day sink in as the sun sets over the water.
-            </p>
-
-            <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed">
-              As dusk approaches, we'll take a final boat ride as newlyweds, celebrating our union in the place that has meant so much to our journey together. It's a simple celebration, but one that perfectly reflects who we are and the life we want to build together.
+            After exchanging our vows, we'll retreat to our cozy rental on the lake. There  we'll spend our first evening as a married couple reading your toasts and heartfelt messages, letting the joy of the day sink in as the sun sets over the water. It will be a simple celebration, but one that perfectly reflects who we are and the life we want to build together.
             </p>
           </div>
         </div>

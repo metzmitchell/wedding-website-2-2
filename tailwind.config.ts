@@ -20,7 +20,9 @@ const config: Config = {
   				'-apple-system',
   				'sans-serif'
   			],
-        handwriting: ['var(--font-homemade-apple)', 'cursive']
+        handwriting: ['var(--font-homemade-apple)', 'cursive'],
+        'dancing-script': ['var(--font-dancing-script)', 'cursive'],
+        'playfair': ['var(--font-playfair-display)', 'serif']
   		},
   		colors: {
   			background: 'hsl(var(--background))',

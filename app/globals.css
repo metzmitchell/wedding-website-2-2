@@ -261,6 +261,56 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
+  /* Paper effect */
+  .paper-effect {
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(0,0,0,0.02) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0,0,0,0.02) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(0,0,0,0.01) 0%, transparent 50%);
+    box-shadow: 
+      0 20px 40px rgba(0,0,0,0.1),
+      0 10px 20px rgba(0,0,0,0.05),
+      0 0 0 1px rgba(0,0,0,0.02);
+  }
+  
+  /* Scroll-triggered shadow effect */
+  .scroll-shadow {
+    transition: box-shadow 0.6s ease-out;
+  }
+  
+  .scroll-shadow:hover {
+    box-shadow: 
+      0 30px 60px rgba(0,0,0,0.15),
+      0 15px 30px rgba(0,0,0,0.1),
+      0 0 0 1px rgba(0,0,0,0.02);
+  }
+  
+  .shadow-intense {
+    box-shadow: 
+      0 40px 80px rgba(0,0,0,0.2),
+      0 20px 40px rgba(0,0,0,0.15),
+      0 0 0 1px rgba(0,0,0,0.02) !important;
+  }
+  
+  .paper-effect::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.01) 2px,
+        rgba(0,0,0,0.01) 4px
+      );
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     .animate-fade-in,

@@ -1,12 +1,30 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Homemade_Apple } from 'next/font/google';
+import { Homemade_Apple, Caveat, Dancing_Script, Playfair_Display } from 'next/font/google';
 import Footer from '@/components/Footer';
 
 const homemadeApple = Homemade_Apple({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-homemade-apple',
+});
+
+const caveat = Caveat({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-caveat',
+});
+
+const dancingScript = Dancing_Script({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-dancing-script',
+});
+
+const playfairDisplay = Playfair_Display({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-playfair-display',
 });
 
 export const metadata: Metadata = {
@@ -20,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={homemadeApple.variable}>
+    <html lang="en" className={`${homemadeApple.variable} ${caveat.variable} ${dancingScript.variable} ${playfairDisplay.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

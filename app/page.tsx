@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Navigation from '@/components/Navigation';
 import NavigationCard from '@/components/NavigationCard';
 import VideoEmbed from '@/components/VideoEmbed';
@@ -9,6 +10,27 @@ import Image from 'next/image'; // Added import for Image
 import Footer from '@/components/Footer';
 
 export default function Home() {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('shadow-intense');
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Navigation />
@@ -22,21 +44,11 @@ export default function Home() {
         }} />
         
         <div className="relative max-w-4xl mx-auto px-6 lg:px-16 text-center py-12">
-          {/* Decorative date element */}
-          <div className="mb-8 flex items-center justify-center gap-4">
-            <span className="block w-16 h-px bg-primary/30" />
-            <span className="font-serif text-sm text-primary/70 tracking-widest uppercase">August 21st, 2024</span>
-            <span className="block w-16 h-px bg-primary/30" />
-          </div>
-
-          <h1 className="font-serif text-5xl lg:text-6xl font-light text-foreground mb-12 tracking-wide animate-fade-in">
-            We're Getting Married!!
-          </h1>
           
 
 
           {/* YouTube Video with elegant frame */}
-          <div className="mb-8 animate-fade-in-delay-2">
+          <div className="mb-16 animate-fade-in-delay-2">
             <div className="relative max-w-3xl mx-auto">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl blur-xl" />
               <VideoEmbed 
@@ -46,29 +58,35 @@ export default function Home() {
               />
             </div>
           </div>
-          
-          <p className="text-base lg:text-lg text-muted-foreground italic text-center mb-16 max-w-2xl mx-auto animate-fade-in-delay-3">
-            We'll explain why we picked August 21st (solar eclipse anniversary and our first-kiss day) 
-            and why eloping felt right.
-          </p>
 
-          {/* Decorative divider */}
-          <div className="flex items-center justify-center mb-16">
-            <span className="text-primary/40 text-2xl">❦</span>
-          </div>
-
-          {/* About Our Wedding Section with page-like styling */}
+          {/* About Our Wedding Section - Handwritten note */}
           <div className="relative animate-fade-in-delay-4">
             <div className="absolute -inset-1 bg-gradient-to-b from-transparent via-primary/5 to-transparent rounded-lg" />
-            <div className="relative bg-white/70 backdrop-blur-sm rounded-lg p-8 lg:p-12 shadow-lg border border-primary/10 max-w-3xl mx-auto mb-12">
-              <p className="font-serif text-lg lg:text-xl text-card-foreground leading-relaxed mb-6">
-                Hello friends and family. We are extremely grateful to have all of you in our lives. This website gives you a glimpse into the family we're creating together. We're eloping in one of our favorite spots in the Western North Carolina mountains on August 21st. After the ceremony at the lake, we'll head to our cabin for the evening where we'll read your well-wishes and set our marriage intentions together.
+            <div ref={cardRef} className="relative bg-white/90 backdrop-blur-sm rounded-lg p-8 lg:p-12 shadow-2xl border-2 border-primary/20 max-w-3xl mx-auto mb-12 transform hover:rotate-1 transition-all duration-500 ease-out paper-effect scroll-shadow">
+              {/* Decorative border */}
+              <div className="absolute inset-0 border border-primary/10 rounded-lg pointer-events-none"></div>
+              <div className="mb-6 mt-4 text-center">
+                <p className="font-dancing-script text-4xl lg:text-5xl text-card-foreground leading-relaxed mb-2">
+                  Hey everyone!
+                </p>
+                <div className="flex justify-center">
+                  <svg className="w-48 h-3 text-primary/60" viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 10 Q50 5 100 10 Q150 15 190 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                  </svg>
+                </div>
+              </div>
+              <p className="font-playfair text-lg lg:text-xl text-card-foreground leading-relaxed mb-4">
+                We made this little site to share some details about our wedding and give you a glimpse into our lives together! We're eloping in one of our favorite spots in the WNC mountains on August 21st, and while we won't be having a traditional in-person wedding, we still wanted to bring you in on the celebration!
               </p>
-              <p className="font-serif text-lg lg:text-xl text-card-foreground leading-relaxed mb-6">
-                To bring everyone into the ceremony, we'd love to read some well-wishes and advice that evening. Please send us a short video, audio message, or written note!
+              <p className="font-playfair text-lg lg:text-xl text-card-foreground leading-relaxed mb-4">
+                This intimate ceremony feels really special and personal to us. If you'd like to be part of the celebration from afar, please send a short video, audio message, or just a few words with a toast or well-wish for us to read that evening back at our cozy little cabin. Having your voices, love, and support woven into our day will make it even more special!
               </p>
-              <p className="font-serif text-lg lg:text-xl text-card-foreground leading-relaxed">
-                This intimate celebration feels right for us, and having your words as part of our ceremony means we can feel your love and presence even from afar.
+              <div className="flex items-center justify-center mt-6 mb-2">
+                <span className="text-primary/40 text-xl">❦</span>
+              </div>
+              <p className="font-playfair text-lg lg:text-xl text-card-foreground text-center">
+                With love,<br />
+                <span className="font-dancing-script text-2xl lg:text-3xl mt-2 block">Sarah & Mitch</span>
               </p>
             </div>
           </div>
@@ -80,33 +98,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Well-Wishes Feed Section */}
-      <section className="py-24 bg-gradient-to-b from-background to-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-16 text-center mb-16">
-          <h2 className="font-serif text-3xl lg:text-4xl text-gray-800 mb-6">Your Toasts to Us</h2>
-          <p className="font-serif text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
-            We'll read every single one on August 21st. Thank you for being part of our ceremony.
-          </p>
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-6 lg:px-16">
-          <ToastFeed 
-            showHeader={false} 
-            showEmptyState={true} 
-            limit={5}
-            maxHeight=""
-          />
-          
-          {/* See More Button */}
-          <div className="text-center mt-8">
-            <Button href="/share-a-toast" className="group">
-              <span className="relative z-10">See All Toasts</span>
-              <span className="absolute inset-0 bg-primary/20 rounded-md scale-110 opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* Navigation Cards Section with enhanced styling */}
       <section className="section-container bg-gradient-to-b from-white to-background relative">
         <div className="absolute inset-0 opacity-[0.02]" style={{
@@ -116,7 +107,7 @@ export default function Home() {
         <div className="relative max-w-6xl mx-auto px-6 lg:px-16">
           {/* Section heading with decorative elements */}
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl lg:text-4xl text-gray-800 mb-4">Explore Our Journey</h2>
+            <h2 className="font-serif text-3xl lg:text-4xl text-gray-800 mb-4">Our Journey</h2>
             <div className="flex items-center justify-center gap-4">
               <span className="block w-24 h-px bg-gradient-to-r from-transparent to-primary/30" />
               <span className="text-primary/40 text-sm">❦</span>
@@ -143,6 +134,33 @@ export default function Home() {
               description="We have everything we need :)"
               className="group hover:transform hover:scale-[1.02] transition-all duration-500"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Well-Wishes Feed Section */}
+      <section className="py-24 bg-gradient-to-b from-background to-white">
+        <div className="max-w-4xl mx-auto px-6 lg:px-16 text-center mb-16">
+          <h2 className="font-serif text-3xl lg:text-4xl text-gray-800 mb-6">Your Toasts to Us</h2>
+          <p className="font-serif text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
+            We'll read every single one on August 21st. Thank you for being part of our ceremony.
+          </p>
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-16">
+          <ToastFeed 
+            showHeader={false} 
+            showEmptyState={true} 
+            limit={5}
+            maxHeight=""
+          />
+          
+          {/* See More Button */}
+          <div className="text-center mt-8">
+            <Button href="/share-a-toast" className="group">
+              <span className="relative z-10">See All Toasts</span>
+              <span className="absolute inset-0 bg-primary/20 rounded-md scale-110 opacity-0 group-hover:opacity-100 blur transition-all duration-500" />
+            </Button>
           </div>
         </div>
       </section>

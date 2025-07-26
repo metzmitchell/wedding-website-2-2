@@ -20,18 +20,18 @@ export default function RegistryPage() {
         {/* Main Content Section */}
         <div className="bg-white/50 backdrop-blur-sm rounded-lg p-8 lg:p-12 max-w-2xl mx-auto shadow-sm mb-16 lg:mb-24">
           <h2 className="font-serif text-2xl lg:text-3xl text-gray-800 mb-8 text-center font-light leading-relaxed">
-            We don't have a registry – we have everything we need.
+            We have everything we need.
           </h2>
 
           <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed mb-12 text-center">
-            Since we didn't make you travel, and we're already set for daily life, we're focusing on saving for our first house with mountain views and hopefully an office that isn't doubling as our laundry room.
+            Some of our loved ones have asked so if you feel like you want to give a gift, we have been saving for our first home! Sarah has been on zillow for years now and we are hoping to buy within the year because we have outgrown our little one bedroom home in downtown asheville.
           </p>
 
           {/* Contribution Information Section */}
           <Card className="bg-gray-50 border-gray-200 max-w-md mx-auto">
             <CardHeader>
               <CardTitle className="text-center font-serif text-lg font-medium text-gray-800">
-                If you'd like to contribute to our future adventures:
+                If you'd like to contribute:
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -41,7 +41,7 @@ export default function RegistryPage() {
                   Venmo
                 </p>
                 <p className="font-mono text-lg text-gray-800">
-                  @[to be determined]
+                  @Mitchell-Metz
                 </p>
               </div>
 
@@ -52,7 +52,7 @@ export default function RegistryPage() {
                 </p>
                 <div className="font-serif text-base text-gray-800 leading-relaxed">
                   <p>28 Claxton PL</p>
-                  <p>AVL, NC</p>
+                  <p>AVL, NC 28801</p>
                 </div>
               </div>
             </CardContent>
