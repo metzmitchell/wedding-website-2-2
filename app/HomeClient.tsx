@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Navigation from '@/components/Navigation';
 import NavigationCard from '@/components/NavigationCard';
-import VideoEmbed from '@/components/VideoEmbed';
+import CustomVideoThumbnail from '@/components/CustomVideoThumbnail';
 import Button from '@/components/Button';
 import ToastFeed from '@/components/ToastFeed';
 import Image from 'next/image';
@@ -48,8 +48,9 @@ export default function HomeClient() {
           <div className="mb-16 animate-fade-in-delay-2">
             <div className="relative max-w-3xl mx-auto">
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-xl blur-xl" />
-              <VideoEmbed 
+              <CustomVideoThumbnail 
                 videoId="MZ0X_Cn-oYY" 
+                thumbnailImage="/images/our-marriage.webp"
                 title="Mitch & Sarah's Wedding Video"
                 className="relative"
               />

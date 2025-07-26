@@ -1,6 +1,6 @@
 "use client"
 
-import VideoEmbed from "@/components/VideoEmbed"
+import CustomVideoThumbnail from "@/components/CustomVideoThumbnail"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Separator } from "@/components/ui/separator"
@@ -16,8 +16,9 @@ export default function OurStoryPage() {
         {/* Video Section */}
         <section className="mb-16 lg:mb-24">
           <div className="max-w-3xl mx-auto">
-            <VideoEmbed 
+            <CustomVideoThumbnail 
               videoId="U5lqpxRBUr0" 
+              thumbnailImage="/images/our-story.webp"
               title="Our Story - The Longer Version"
               className="max-w-3xl mx-auto"
             />
