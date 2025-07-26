@@ -32,14 +32,6 @@ const nextConfig = {
       },
     ];
   },
-  experimental: {
-    serverComponentsExternalPackages: ['firebase-admin'],
-  },
-  api: {
-    bodyParser: {
-      sizeLimit: '8gb',
-    },
-  },
 };
 
 export default nextConfig;

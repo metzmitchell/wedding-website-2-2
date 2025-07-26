@@ -68,7 +68,7 @@ export default function ShareToastPage() {
       // Upload media if present
       if (selectedType === 'video' && formData.file) {
         setUploadStage('uploading');
-        console.log('Uploading video file via API route...');
+        console.log('Uploading video file directly to Firebase...');
         
         // Simulate upload progress
         const progressInterval = setInterval(() => {
@@ -81,50 +81,22 @@ export default function ShareToastPage() {
           });
         }, 200);
 
-        const apiFormData = new FormData();
-        apiFormData.append('file', formData.file);
-        apiFormData.append('filePath', `toasts/videos/${Date.now()}_${formData.file.name}`);
-
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: apiFormData,
-        });
-
-        clearInterval(progressInterval);
-        setUploadProgress(100);
-        setUploadStage('processing');
-
-        let result;
-        const contentType = response.headers.get('content-type');
-        
-        if (!response.ok) {
-          // Handle error responses
-          if (response.status === 413) {
-            throw new Error('Video file is too large. Please try a smaller file (max 50MB).');
-          }
+        try {
+          const filePath = `toasts/videos/${Date.now()}_${formData.file.name}`;
+          mediaUrl = await uploadFile(formData.file, filePath);
           
-          // Try to parse error response
-          try {
-            if (contentType && contentType.includes('application/json')) {
-              result = await response.json();
-              throw new Error(result.error || 'Failed to upload video.');
-            } else {
-              const errorText = await response.text();
-              throw new Error(errorText || `Upload failed with status ${response.status}`);
-            }
-          } catch (parseError) {
-            throw new Error(`Upload failed with status ${response.status}`);
-          }
+          clearInterval(progressInterval);
+          setUploadProgress(100);
+          setUploadStage('processing');
+          console.log('Video upload successful:', mediaUrl);
+        } catch (uploadError) {
+          clearInterval(progressInterval);
+          throw new Error(uploadError instanceof Error ? uploadError.message : 'Failed to upload video.');
         }
-        
-        // Success - parse response
-        result = await response.json();
-        mediaUrl = result.mediaUrl;
-        console.log('Video upload successful:', mediaUrl);
         
       } else if (selectedType === 'audio' && formData.audioBlob) {
         setUploadStage('uploading');
-        console.log('Uploading audio file via API route...');
+        console.log('Uploading audio file directly to Firebase...');
         
         // Simulate upload progress
         const progressInterval = setInterval(() => {
@@ -137,47 +109,19 @@ export default function ShareToastPage() {
           });
         }, 200);
 
-        const audioFile = new File([formData.audioBlob], 'audio.webm', { type: 'audio/webm' });
-        const apiFormData = new FormData();
-        apiFormData.append('file', audioFile);
-        apiFormData.append('filePath', `toasts/audio/${Date.now()}_audio.webm`);
-
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: apiFormData,
-        });
-
-        clearInterval(progressInterval);
-        setUploadProgress(100);
-        setUploadStage('processing');
-
-        let result;
-        const contentType = response.headers.get('content-type');
-        
-        if (!response.ok) {
-          // Handle error responses
-          if (response.status === 413) {
-            throw new Error('Audio file is too large. Please try a shorter recording.');
-          }
+        try {
+          const audioFile = new File([formData.audioBlob], 'audio.webm', { type: 'audio/webm' });
+          const filePath = `toasts/audio/${Date.now()}_audio.webm`;
+          mediaUrl = await uploadFile(audioFile, filePath);
           
-          // Try to parse error response
-          try {
-            if (contentType && contentType.includes('application/json')) {
-              result = await response.json();
-              throw new Error(result.error || 'Failed to upload audio.');
-            } else {
-              const errorText = await response.text();
-              throw new Error(errorText || `Upload failed with status ${response.status}`);
-            }
-          } catch (parseError) {
-            throw new Error(`Upload failed with status ${response.status}`);
-          }
+          clearInterval(progressInterval);
+          setUploadProgress(100);
+          setUploadStage('processing');
+          console.log('Audio upload successful:', mediaUrl);
+        } catch (uploadError) {
+          clearInterval(progressInterval);
+          throw new Error(uploadError instanceof Error ? uploadError.message : 'Failed to upload audio.');
         }
-        
-        // Success - parse response
-        result = await response.json();
-        mediaUrl = result.mediaUrl;
-        console.log('Audio upload successful:', mediaUrl);
       }
 
       // Prepare document data
@@ -408,8 +352,8 @@ export default function ShareToastPage() {
                         e.stopPropagation();
                         const file = e.dataTransfer.files[0];
                         if (file && file.type.startsWith('video/')) {
-                          if (file.size > 50 * 1024 * 1024) {
-                            setError('Video must be less than 50MB. Please compress your video or record a shorter one.');
+                          if (file.size > 8 * 1024 * 1024 * 1024) {
+                            setError('Video must be less than 8GB.');
                             return;
                           }
                           setFormData({ ...formData, file });
@@ -421,8 +365,8 @@ export default function ShareToastPage() {
                         accept="video/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
-                          if (file && file.size > 50 * 1024 * 1024) {
-                            setError('Video must be less than 50MB. Please compress your video or record a shorter one.');
+                          if (file && file.size > 8 * 1024 * 1024 * 1024) {
+                            setError('Video must be less than 8GB.');
                             return;
                           }
                           setFormData({ ...formData, file: file || null });
@@ -436,7 +380,7 @@ export default function ShareToastPage() {
                           {formData.file ? formData.file.name : 'Click to browse or drag and drop'}
                         </p>
                         <p className="font-serif text-sm text-gray-500 mt-2">
-                          MP4, MOV, AVI (max 50MB)
+                          MP4, MOV, AVI (max 8GB)
                         </p>
                       </label>
                     </div>

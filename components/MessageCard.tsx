@@ -27,7 +27,6 @@ export default function MessageCard({ message, author, type = 'text', mediaUrl }
             <video 
               controls 
               className="w-full h-full rounded-md"
-              poster="/api/placeholder/400/225"
             >
               <source src={mediaUrl} type="video/mp4" />
               Your browser does not support the video tag.
