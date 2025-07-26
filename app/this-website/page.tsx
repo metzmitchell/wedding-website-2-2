@@ -1,101 +1,88 @@
-'use client';
-
-import { useState } from 'react';
 import Navigation from '@/components/Navigation';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function ThisWebsitePage() {
-  const [notesExpanded, setNotesExpanded] = useState(false);
-
   return (
     <>
       <Navigation />
-      <main className="min-h-screen py-12">
-        <div className="max-w-4xl mx-auto px-6 lg:px-16">
-          <h1 className="font-serif text-4xl lg:text-5xl text-gray-800 text-center mb-12">
-            This Website
-          </h1>
-
-          {/* Main Content */}
-          <div className="prose prose-lg max-w-none">
-            <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed mb-6">
-              As a marketer, I love finding truly terrible branding. I call Sarah "Pumpkin," and during a long drive, 
-              I started imagining the worst possible brand name: "Pumpkins Pumpkins Pumpkins and More." I imagine a 
-              90's store crossing Party City with Bed Bath & Beyond, then adding ".com" to their name during the 
-              2000's rebrand. Complete with horrible Toys R Us color scheme. Maybe someday I'll create a fake online 
-              store for it.
+      <main className="page-container section-container">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="font-serif text-display text-gray-800 mb-8">This Website</h1>
+            <p className="font-serif text-body text-gray-600 max-w-2xl mx-auto">
+              Built with AI using "Vibe Coding" - I was just wanting to learn more about using AI.
             </p>
+          </div>
 
-            <p className="font-serif text-lg lg:text-xl text-gray-700 leading-relaxed mb-8">
-              So naturally, we bought the domain.
-            </p>
-
-            {/* Video Section */}
-            <div className="my-12 bg-white rounded-lg shadow-lg p-8">
-              <h2 className="font-serif text-2xl text-gray-800 mb-4">Building the Site</h2>
-              <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center mb-6">
-                <p className="font-serif text-gray-500">Video coming soon: Timelapse of the coding process</p>
-              </div>
-              <p className="font-serif text-lg text-gray-700">
-                Built during late nights fueled by coffee and AI assistance through{' '}
-                <a 
-                  href="https://www.youtube.com/watch?v=vj_5VNR1B1U" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-700 underline"
-                >
-                  vibe coding
-                </a>
-                . Watch the timelapse if you enjoy seeing code break and get fixed in real time. 
-                I spent hours talking to Claude, iterating on designs, and bringing this wedding website to life.
+          <div className="space-y-12">
+            {/* Branding Section */}
+            <section>
+              <h2 className="font-serif text-2xl font-semibold text-gray-800 mb-6">
+                Why Pumpkinspumpkinspumpkinsandmore.com ???
+              </h2>
+              <p className="font-serif text-body text-gray-600">
+                The domain name is a bit of a mouthful, but it's ours! We wanted something unique and memorable.
               </p>
-            </div>
+            </section>
 
-            {/* Expandable Notes Section */}
-            <div className="mt-12 bg-gray-50 rounded-lg border border-gray-200">
-              <button
-                onClick={() => setNotesExpanded(!notesExpanded)}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-100 transition-colors rounded-lg"
-              >
-                <h3 className="font-serif text-xl text-gray-800">Notes for Mitch</h3>
-                {notesExpanded ? (
-                  <ChevronUp className="w-5 h-5 text-gray-600" />
-                ) : (
-                  <ChevronDown className="w-5 h-5 text-gray-600" />
-                )}
-              </button>
+            {/* Vibe Coding Section */}
+            <section>
+              <h2 className="font-serif text-2xl font-semibold text-gray-800 mb-6">
+                Vibe Coding - it's what the cool kids are doing
+              </h2>
+              <p className="font-serif text-body text-gray-600 mb-6">
+                I built this website using "Vibe Coding" - a modern approach to web development that leverages AI tools and rapid prototyping. Here are some of the interesting tools and techniques I learned along the way:
+              </p>
               
-              {notesExpanded && (
-                <div className="px-6 pb-6 font-serif text-gray-700 space-y-4">
-                  <p className="italic">
-                    Hey future me! Here are some notes about this website build:
-                  </p>
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>Used Next.js 14 with the new App Router</li>
-                    <li>Styled with Tailwind CSS and shadcn/ui components</li>
-                    <li>Firebase for the backend (Firestore, Storage, Auth)</li>
-                    <li>Integrated multiple AI APIs: OpenAI, Anthropic Claude, Deepgram, and Replicate</li>
-                    <li>The toast submission system supports text, audio, and video messages</li>
-                    <li>Direct Firebase uploads for large video files (up to 8GB)</li>
-                    <li>Deployed on Vercel with automatic GitHub deployments</li>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="font-serif text-lg font-semibold text-gray-800 mb-4">Design & Planning</h3>
+                  <ul className="space-y-2 text-gray-600">
+                    <li>• <strong>Cursor AI</strong> - For intelligent code completion and project management</li>
+                    <li>• <strong>v0.dev</strong> - AI-powered UI generation and prototyping</li>
+                    <li>• <strong>ShadCN/UI</strong> - Beautiful, accessible component library</li>
+                    <li>• <strong>Tailwind CSS</strong> - Utility-first styling framework</li>
+                    <li>• <strong>Mermaid</strong> - For creating architectural diagrams</li>
                   </ul>
-                  <p>
-                    The entire site was built using AI pair programming. Every line of code was written 
-                    through conversations with Claude. It's amazing what's possible when you combine human 
-                    creativity with AI capabilities.
-                  </p>
-                  <p>
-                    If something breaks, just talk to Claude again. The AI remembers the patterns and can 
-                    help debug issues. This is the future of software development!
-                  </p>
                 </div>
-              )}
-            </div>
 
-            {/* Final Note */}
-            <p className="font-serif text-lg text-gray-600 text-center mt-12 italic">
-              As a side note, Mitch coded this entire website using AI, so some features might or might not work.
-            </p>
+                <div>
+                  <h3 className="font-serif text-lg font-semibold text-gray-800 mb-4">Development Tools</h3>
+                  <ul className="space-y-2 text-gray-600">
+                    <li>• <strong>Next.js 14</strong> - React framework with App Router</li>
+                    <li>• <strong>TypeScript</strong> - Type-safe JavaScript development</li>
+                    <li>• <strong>Firebase</strong> - Backend services and authentication</li>
+                    <li>• <strong>Vercel</strong> - Deployment and hosting platform</li>
+                    <li>• <strong>Git & GitHub</strong> - Version control and collaboration</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <h3 className="font-serif text-lg font-semibold text-gray-800 mb-4">Key Learnings</h3>
+                <ul className="space-y-2 text-gray-600">
+                  <li>• <strong>AI-Powered Development:</strong> Using AI tools like Claude and Gemini for code generation and review</li>
+                  <li>• <strong>Component-First Design:</strong> Building reusable UI components from the start</li>
+                  <li>• <strong>Rapid Prototyping:</strong> Quickly iterating on designs and functionality</li>
+                  <li>• <strong>Modern Web Standards:</strong> Embracing the latest web technologies and best practices</li>
+                  <li>• <strong>Security Best Practices:</strong> Implementing proper authentication and data protection</li>
+                </ul>
+              </div>
+            </section>
+
+            {/* Technical Details */}
+            <section>
+              <h3 className="font-serif text-lg font-semibold text-gray-800 mb-4">Technical Architecture</h3>
+              <p className="font-serif text-body text-gray-600 mb-4">
+                This website is built with a modern, scalable architecture:
+              </p>
+              <ul className="space-y-2 text-gray-600">
+                <li>• <strong>Frontend:</strong> Next.js with TypeScript and Tailwind CSS</li>
+                <li>• <strong>Backend:</strong> Firebase for authentication, database, and file storage</li>
+                <li>• <strong>Deployment:</strong> Vercel for seamless CI/CD and hosting</li>
+                <li>• <strong>AI Integration:</strong> Multiple AI services for enhanced functionality</li>
+                <li>• <strong>Performance:</strong> Optimized for speed and accessibility</li>
+              </ul>
+            </section>
           </div>
         </div>
       </main>
