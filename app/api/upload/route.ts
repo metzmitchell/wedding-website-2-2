@@ -43,6 +43,10 @@ if (!getApps().length) {
   });
 }
 
+export const runtime = 'nodejs';
+
+export const maxDuration = 60; // 60 seconds timeout for large uploads
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();

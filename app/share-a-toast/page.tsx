@@ -94,10 +94,31 @@ export default function ShareToastPage() {
         setUploadProgress(100);
         setUploadStage('processing');
 
-        const result = await response.json();
+        let result;
+        const contentType = response.headers.get('content-type');
+        
         if (!response.ok) {
-          throw new Error(result.error || 'Failed to upload video.');
+          // Handle error responses
+          if (response.status === 413) {
+            throw new Error('Video file is too large. Please try a smaller file (max 50MB).');
+          }
+          
+          // Try to parse error response
+          try {
+            if (contentType && contentType.includes('application/json')) {
+              result = await response.json();
+              throw new Error(result.error || 'Failed to upload video.');
+            } else {
+              const errorText = await response.text();
+              throw new Error(errorText || `Upload failed with status ${response.status}`);
+            }
+          } catch (parseError) {
+            throw new Error(`Upload failed with status ${response.status}`);
+          }
         }
+        
+        // Success - parse response
+        result = await response.json();
         mediaUrl = result.mediaUrl;
         console.log('Video upload successful:', mediaUrl);
         
@@ -130,10 +151,31 @@ export default function ShareToastPage() {
         setUploadProgress(100);
         setUploadStage('processing');
 
-        const result = await response.json();
+        let result;
+        const contentType = response.headers.get('content-type');
+        
         if (!response.ok) {
-          throw new Error(result.error || 'Failed to upload audio.');
+          // Handle error responses
+          if (response.status === 413) {
+            throw new Error('Audio file is too large. Please try a shorter recording.');
+          }
+          
+          // Try to parse error response
+          try {
+            if (contentType && contentType.includes('application/json')) {
+              result = await response.json();
+              throw new Error(result.error || 'Failed to upload audio.');
+            } else {
+              const errorText = await response.text();
+              throw new Error(errorText || `Upload failed with status ${response.status}`);
+            }
+          } catch (parseError) {
+            throw new Error(`Upload failed with status ${response.status}`);
+          }
         }
+        
+        // Success - parse response
+        result = await response.json();
         mediaUrl = result.mediaUrl;
         console.log('Audio upload successful:', mediaUrl);
       }
@@ -244,7 +286,7 @@ export default function ShareToastPage() {
             Feel free to keep it simple! Write a short message or share a quick video – doesn't have to be more than a few minutes. We just appreciate you thinking of us and being a part of our lives.
           </p>
           <p className="font-serif text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto text-center mt-6">
-            Note: If this doesn't work for you (Mitch coded it with AI), just email us at <a href="mailto:metzmitchell@gmail.com" className="text-blue-500 hover:text-blue-600">metzmitchell@gmail.com</a>
+            Note: If this doesn't work for you (Mitch coded it with AI), or if the video is longer than 10 minutes, just email us at <a href="mailto:metzmitchell@gmail.com" className="text-blue-500 hover:text-blue-600">metzmitchell@gmail.com</a>
           </p>
         </div>
 
@@ -366,8 +408,8 @@ export default function ShareToastPage() {
                         e.stopPropagation();
                         const file = e.dataTransfer.files[0];
                         if (file && file.type.startsWith('video/')) {
-                          if (file.size > 8 * 1024 * 1024 * 1024) {
-                            setError('Video must be less than 8GB');
+                          if (file.size > 50 * 1024 * 1024) {
+                            setError('Video must be less than 50MB. Please compress your video or record a shorter one.');
                             return;
                           }
                           setFormData({ ...formData, file });
@@ -379,8 +421,8 @@ export default function ShareToastPage() {
                         accept="video/*"
                         onChange={(e) => {
                           const file = e.target.files?.[0];
-                          if (file && file.size > 8 * 1024 * 1024 * 1024) {
-                            setError('Video must be less than 8GB');
+                          if (file && file.size > 50 * 1024 * 1024) {
+                            setError('Video must be less than 50MB. Please compress your video or record a shorter one.');
                             return;
                           }
                           setFormData({ ...formData, file: file || null });
@@ -394,7 +436,7 @@ export default function ShareToastPage() {
                           {formData.file ? formData.file.name : 'Click to browse or drag and drop'}
                         </p>
                         <p className="font-serif text-sm text-gray-500 mt-2">
-                          MP4, MOV, AVI (max 8GB)
+                          MP4, MOV, AVI (max 50MB)
                         </p>
                       </label>
                     </div>
