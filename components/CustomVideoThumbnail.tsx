@@ -25,9 +25,9 @@ export default function CustomVideoThumbnail({
   if (isPlaying) {
     return (
       <div className={`relative w-full ${className}`}>
-        <div className="relative pb-[56.25%] h-0 md:border-2 md:border-gray-200 md:rounded-lg md:bg-white md:p-2">
+        <div className="relative pb-[56.25%] h-0 border-2 border-gray-200 rounded-lg bg-white p-2">
           <iframe
-            className="absolute top-0 left-0 w-full h-full md:top-2 md:left-2 md:w-[calc(100%-16px)] md:h-[calc(100%-16px)] md:rounded-md"
+            className="absolute top-2 left-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-md"
             src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
             title={title}
             frameBorder="0"
@@ -41,13 +41,13 @@ export default function CustomVideoThumbnail({
 
   return (
     <div className={`relative w-full cursor-pointer group ${className}`} onClick={handlePlay}>
-      <div className="relative pb-[56.25%] h-0 md:border-2 md:border-gray-200 md:rounded-lg md:bg-white md:p-2">
-        <div className="absolute top-0 left-0 w-full h-full md:top-2 md:left-2 md:w-[calc(100%-16px)] md:h-[calc(100%-16px)] md:rounded-md overflow-hidden">
+      <div className="relative pb-[56.25%] h-0 border-2 border-gray-200 rounded-lg bg-white p-2">
+        <div className="absolute top-2 left-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-md overflow-hidden">
           <Image
             src={thumbnailImage}
             alt={title}
             fill
-            className="object-cover md:rounded-md"
+            className="object-cover rounded-md"
             priority
           />
           
